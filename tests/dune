@@ -1,0 +1,5 @@
+(test
+  (name main_test)
+  (flags (:standard -w -27))
+  (libraries oUnit)
+)

@@ -1,0 +1,5 @@
+(executable
+  (name eos)
+  (public_name eos)
+  (libraries cmdliner eos.core)
+)

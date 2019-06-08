@@ -1,0 +1,29 @@
+opam-version: "2.0"
+
+name: "eos"
+version: "0.0"
+license: "MIT"
+synopsis: "Another header manager"
+description: """
+Eos is a simple header manager for your projects. It allows to manage header
+in one single JSON file and automatize many features.
+"""
+
+
+maintainer: [
+    "Étienne (Maiste) Marais <etienne@marais.green>"
+    " Xavier (Xavitator) Durand"
+]
+
+authors: [
+     "Étienne (Maiste) Marais <etienne@marais.green>"
+    " Xavier (Xavitator) Durand"
+]
+
+depends: [
+    "dune"        {build & >= "1.4.0"}
+    "ocaml"       {>= "4.05"}
+    "odoc"        {with-doc}
+    "cmdliner"  
+]
+

@@ -1,0 +1,2 @@
+let () = 
+  Core.Main.main ()
