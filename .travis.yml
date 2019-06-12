@@ -1,5 +1,4 @@
 os: linux
 language: minimal
 
-install: make docker-build
-script: make docker-run
+script: sh .travis.sh
