@@ -1,5 +1,8 @@
 (test
   (name main_test)
   (flags (:standard -w -27))
+  (deps
+    (source_tree res)
+  )
   (libraries oUnit eos.core)
 )

@@ -1,7 +1,8 @@
 open OUnit2
 
  let test_list = "Test list" >::: [
-      Test_hello.suite
+   Test_hello.suite ;
+   Test_reader.suite
  ]
 
  let () =
