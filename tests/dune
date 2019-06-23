@@ -1,5 +1,5 @@
 (test
   (name main_test)
   (flags (:standard -w -27))
-  (libraries oUnit eos.core)
+  (libraries alcotest eos.core)
 )
