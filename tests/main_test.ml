@@ -1,8 +1,14 @@
-open OUnit2
+(*
+ * Test main module 
+ * DURAND-MARAIS © 2019
+ *) 
 
- let test_list = "Test list" >::: [
-      Test_hello.suite
+
+let test_core = [
+   "Hello", Test_hello.suite ;
  ]
 
+
  let () =
-   test_list |> run_test_tt_main  
+   Alcotest.run "Eos tests" test_core
+  

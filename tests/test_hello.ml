@@ -1,14 +1,18 @@
-open OUnit2
+(*
+ * Module to provide a test example 
+ * DURAND-MARAIS © 2019
+ *)
+open Alcotest
+
 
 (* Test if hello is equal hello *)
 let test_hello_eq _ = 
-  let () = Printf.printf "Hello" 
-  in assert_equal "Hello" "Hello"
+  (check string) "equal Hello" "Hello" "Hello"
+
 
 (* Test suite for Hello *)
-let suite = "Test Hello" >::: 
-  [
-    "Hello" >:: test_hello_eq
-  ]
+let suite = [
+    "Hello equality", `Quick, test_hello_eq
+]
 
 
