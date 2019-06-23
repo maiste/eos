@@ -11,6 +11,7 @@ let test_core = [
   "Conf", Test_conf.suite           ;
   "FString", Test_fstring.suite     ;
   "Formatter", Test_formatter.suite ;
+  "Comparator", Test_comparator.suite ;
 ]
 
 
