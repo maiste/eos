@@ -6,39 +6,35 @@
 
 1) Create a new branch with the name of the new feature in your fork (or the current repository if you are a code owner).
 
-2) Add a test file ```<feature>_test.ml``` in the ```tests/``` directory with your test suite function (OUnit). Add this function to the list in 
+2) Add a test file ```<feature>_test.ml``` in the ```tests/``` directory with your test suite function (Alcotest). Add this function to the list in 
 `main_test.ml`. If you modify an already existing file, just add tests to the existing suite associated with.
 Only PR that passed tests will be accepted.
 *Example*: 
 
 ```
   (* newfeature_test.ml *)
-  open OUnit2
+  open Alcotest
   
   let test_newfeature1 = 
-    let ()  = Printf.printf "Feature1" in 
-    assert_equal 1 1
-    
-   let test_newfeature2 = 
-    let ()  = Printf.printf "Feature2" in 
-    assert_equal 1 1
+    (check string) "Hello eq" "Hello" "Hello"
+
+   let test_newfeature2 =  
+    (check int) "Int eq" 1 1
   
-  let suite = "Test newfeature" >:::
-    [ 
-      "Feature1" >::: test_newfeature1 ;
-      "Feature2" >::: test_newfeature2 
+  let suite = [ 
+      "Feature1", `Quick, test_newfeature1 ;
+      "Feature2", `Quick, test_newfeature2 ;
     ]
 
 
   (* main_test.ml *)
-  open OUnit2
   
-  let test_list = "Test_list" >:::
-    [
-      Newfeature_test.suite
+  let test_core = [
+      "Newfeature", Newfeature_test.suite
     ]
   
-  let () = runt_test_tt_main test_list
+  let () = 
+      Alcotest.run "Eos tests" test_core
 ```
 
 3) Create a Pull request into ```dev``` with a reference to your issue number. Be 100% proud of the work you push. It means a clean history (one 
