@@ -25,5 +25,7 @@ depends: [
     "ocaml"       {>= "4.05"}
     "odoc"        {with-doc}
     "cmdliner"  
+    "str"
+    "alcotest"
 ]
 
