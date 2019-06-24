@@ -6,6 +6,7 @@
 
 let test_core = [
    "Hello", Test_hello.suite ;
+   "Reader", Test_reader.suite ;
  ]
 
 

@@ -9,7 +9,6 @@ open Alcotest
 let test_hello_eq _ = 
   (check string) "equal Hello" "Hello" "Hello"
 
-
 (* Test suite for Hello *)
 let suite = [
     "Hello equality", `Quick, test_hello_eq
