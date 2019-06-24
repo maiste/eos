@@ -2,4 +2,7 @@
   (name main_test)
   (flags (:standard -w -27))
   (libraries alcotest eos.core)
+  (deps
+    (source_tree res)
+  )
 )
