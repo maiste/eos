@@ -1,0 +1,9 @@
+{
+    "name" : "eos",
+    "files": [
+    	"ex.*\\.json",
+        {"test" : true},
+        {"origami" : 5},
+        {"editor" : 1.0}
+    ]
+}
