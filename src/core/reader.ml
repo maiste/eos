@@ -1,7 +1,7 @@
 (* 
  * Module to convert a file into
  * a string list
- * @author MARAIS - DURAND © 2019
+ * DURAND - MARAIS © 2019
  *)
 
 

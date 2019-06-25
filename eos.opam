@@ -27,5 +27,6 @@ depends: [
     "cmdliner"  
     "str"
     "alcotest"
+    "yojson"
 ]
 

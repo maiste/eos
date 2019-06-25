@@ -13,7 +13,8 @@ let test_bank =
     ["echec"];
     ["\\..*"];
     ["src/"];
-    ["./src"]
+    ["./src"];
+    []
   ]
 
 (* Function to call a system command and recover the exit *)
@@ -46,21 +47,18 @@ let finder_cmd rgxl =
 
 (* Test if finder works correctly *)
 let test_finder_eq _ = 
-  let rec aux l turn =
-    match l with
-    | [] -> ()
-    | h :: q -> 
-      let res_cmd = List.sort compare (finder_cmd h) in
-      let res_finder = List.sort compare ("" :: Finder.get_all_files h) in
-      (check (list string)) ("equal list " ^ (string_of_int turn)) res_cmd res_finder;
-      aux q (turn + 1)
+  let aux turn h =
+    let res_cmd = List.sort compare (finder_cmd h) in
+    let res_finder = List.sort compare ("" :: Finder.get_all_files h) in
+    (check (list string)) ("equal list " ^ (string_of_int turn)) res_cmd res_finder
   in
-  aux test_bank 0
+  List.iteri aux test_bank
 
+let name_test_finder = "List finder equality : " ^ (string_of_int (List.length test_bank)) ^ " subtests"
 
 (* Test suite for Finder *)
 let suite = [
-  "List finder equality", `Slow, test_finder_eq
+  name_test_finder, `Slow, test_finder_eq
 ]
 
 
