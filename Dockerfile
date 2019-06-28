@@ -1,7 +1,10 @@
-FROM ubuntu:latest
+FROM fedora:latest
 
-RUN apt-get update -y && apt-get install -y ocaml opam m4 
-RUN opam init -y && opam update
+RUN dnf upgrade -y
+RUN dnf install -y ocaml opam ocaml-dune git
+RUN opam init --disable-sandboxing -y && eval $(opam env)
+RUN opam update -y && opam upgrade -y
+RUN eval `opam config env`
 RUN opam install -y dune cmdliner alcotest yojson
 RUN eval `opam config env`
 
