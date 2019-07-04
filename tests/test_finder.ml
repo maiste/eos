@@ -14,7 +14,7 @@ let test_bank =
     ["\\..*"];
     ["src/"];
     ["./src"];
-    []
+    [];
   ]
 
 (* Function to call a system command and recover the exit *)
