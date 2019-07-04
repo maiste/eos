@@ -5,7 +5,6 @@
 
 open Monad
 
-(** Return the content of the file named by [str] and return an either
- * type *)
+(** Return the content of the file named by [str] *)
 val read_file : string -> string list choice
 
