@@ -4,10 +4,15 @@
  * DURAND - MARAIS © 2019
  *)
 
+open Monad
+
 (* This function checks if a string passed in argument is a directory. 
     The default value is Sys.is_directory function.
 *)
-let check_directory path : bool = Sys.is_directory path
+let check_directory path : bool = 
+  try
+    Sys.is_directory path
+  with Sys_error _ -> false
 
 (*
    This function returns if a file is targeted.
@@ -17,7 +22,7 @@ let is_targeted target path : bool =
     let el_len = String.length el in
     let dir = 
       if el_len > 0 
-      then String.get el (String.length el - 1) = '/'  
+      then String.get el (String.length el - 1) = '/'
       else false
     in
     if dir && not (check_directory path) then false
@@ -69,3 +74,9 @@ let get_all_files target : string list =
     Array.fold_left aux acc all_f
   in
   get_file target "." []
+
+
+let get_files target : string list choice = 
+  match get_all_files target with
+  | [] -> Error "[Warning] can't find any file"
+  | lst -> Ok lst
