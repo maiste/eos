@@ -44,17 +44,23 @@ let finder_cmd rgxl =
   decomp call_cmd
 
 
-
 (* Test if finder works correctly *)
 let test_finder_eq _ = 
   let aux turn h =
     let res_cmd = List.sort compare (finder_cmd h) in
-    let res_finder = List.sort compare ("" :: Finder.get_all_files h) in
-    (check (list string)) ("equal list " ^ (string_of_int turn)) res_cmd res_finder
+    let res_finder = match Finder.get_files h with 
+      | Ok content -> List.sort compare (""::content)
+      | Error str -> [""]
+    in 
+    (check (list string)) 
+      ("equal list " ^ (string_of_int turn)) res_cmd res_finder
   in
   List.iteri aux test_bank
 
-let name_test_finder = "List finder equality : " ^ (string_of_int (List.length test_bank)) ^ " subtests"
+let name_test_finder = 
+  "List finder equality : " ^
+  (string_of_int (List.length test_bank)) ^
+  " subtests"
 
 (* Test suite for Finder *)
 let suite = [
