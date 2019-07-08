@@ -5,7 +5,7 @@ version: "0.0"
 license: "MIT"
 synopsis: "Another header manager"
 description: """
-Eos is a simple header manager for your projects. It allows to manage header
+Eos is a simple header manager for your projects. It allows you to manage header
 in one single JSON file and automatize many features.
 """
 
@@ -30,6 +30,7 @@ depends: [
     "cmdliner"
     "alcotest"
     "yojson"
+    "cmdliner"
 ]
 
 build: ["dune" "build" "-p" name "-j" jobs]
