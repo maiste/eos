@@ -19,17 +19,16 @@ We provide a command line user interface to use eos. We add basic commands :
 We define a **.eos/config.json** file where the configuration is stored for the project. During the Hyde phase, we only use following fields in the JSON file:
 
 ```json
-	"name" : "eos",
-	"files": [
-    	"ex*.json",
-    	"tests/"
+  "name" : "eos",
+  "files": [
+      "ex*.json",
+      "tests/"
     ]
 ```
 We will describe it in the future documentation. It will be written with **Sphinx**.
 ### Files
 We put our functions in different files : 
 
-- ```comparator.ml```:  module to handle comparison between two strings
 - ```reader.ml```: module to read files in different formats
 - ```conf.ml```: module to read and update configuration
 - ```cmdline.ml```: module in charge of the command line user interface
