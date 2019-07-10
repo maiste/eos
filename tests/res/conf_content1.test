@@ -1,0 +1,8 @@
+{
+    "name": "eos",
+    "files": [
+        "ex.*\\.json",
+        "tests/"
+    ],
+    "is_working": true
+}

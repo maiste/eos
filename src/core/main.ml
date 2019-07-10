@@ -1,1 +1,1 @@
-let main _ = Printf.printf "Hello, World!"
+let main _ = Cmdline.run ()

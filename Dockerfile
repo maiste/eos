@@ -1,8 +1,17 @@
-FROM ubuntu:latest
+FROM fedora:latest
 
-RUN apt-get update -y && apt-get install -y ocaml opam m4 
-RUN opam init -y && opam update
-RUN opam install -y dune cmdliner Ounit
-RUN eval `opam config env`
+RUN dnf upgrade -y
+RUN dnf install -y ocaml opam ocaml-dune git which findutils
+RUN opam init --disable-sandboxing -y && eval $(opam env)
+RUN opam update -y && opam upgrade -y && eval $(opam env) 
 
 COPY . /root
+WORKDIR /root
+
+RUN opam switch create 4.08.0
+RUN eval eval $(opam env)
+RUN opam switch 4.08.0
+RUN eval $(opam env) && ocaml --version
+RUN opam install -y . --deps-only
+RUN eval $(opam env)
+

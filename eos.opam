@@ -5,10 +5,13 @@ version: "0.0"
 license: "MIT"
 synopsis: "Another header manager"
 description: """
-Eos is a simple header manager for your projects. It allows to manage header
+Eos is a simple header manager for your projects. It allows you to manage header
 in one single JSON file and automatize many features.
 """
 
+homepage: "https://github.com/maiste/eos"
+bug-reports: "https://github.com/maiste/eos/issues"
+dev-repo: "git://github.com/maiste/eos.git"
 
 maintainer: [
     "Étienne (Maiste) Marais <etienne@marais.green>"
@@ -21,9 +24,14 @@ authors: [
 ]
 
 depends: [
-    "dune"        {build & >= "1.4.0"}
-    "ocaml"       {>= "4.05"}
-    "odoc"        {with-doc}
-    "cmdliner"  
+    "dune"    {build}
+    "ocaml"   {build & >= "4.07.0"}
+    "odoc"     {build}
+    "cmdliner"
+    "alcotest"
+    "yojson"
+    "cmdliner"
 ]
+
+build: ["dune" "build" "-p" name "-j" jobs]
 
