@@ -1,14 +1,6 @@
 # Hyde phase
 In the following document, we will describe all features of the second phase. This phase is associated with the milestone `Hyde (1)`.
 
-### Compare Headers
-We provide a complete module to compare two given headers.
-It compares two headers and determines :
-
-- if one header encompasses the other : we return the most encompassing
-- what are the differences between both headers
-- all the information about the link between both headers
-
 ### Basic command line
 We provide a command line user interface to use eos. We add basic commands : 
 

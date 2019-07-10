@@ -1,6 +1,14 @@
 # Metamorph phase
 In the following document, we describe all features of the third phase. This phase is associated with the milestone `Metamorph (2)`.
 
+### Compare Headers
+We provide a complete module to compare two given headers.
+It compares two headers and determines :
+
+- if one header encompasses the other : we return the most encompassing
+- what are the differences between both headers
+- all the information about the link between both headers
+
 ### JSON template
 We provide a complete module to read a JSON template based on `Mustache`. Those templates describe how the header should be and the user configuration.
 
