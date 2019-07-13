@@ -4,7 +4,7 @@
  * DURAND - MARAIS © 2019
  *)
 
-open Yojson.Basic
+open Ezjsonm
 open Monad
 
 
@@ -14,32 +14,34 @@ let conf_file = "./.eos/config.json"
 
 (* init [json] variable *)
 let init_json path =
-  try Ok (from_file path)
-  with Sys_error _ -> Error "[Error] can't init json"
+  try 
+    let file = open_in path in
+    Ok (from_channel file)
+  with Sys_error _ | Parse_error _ -> Error "[Error] can't init json"
 
 
 (* Get the corresponding field of [str] in [json] *)
-let member str js = 
+let member js str_path = 
   try
-    Ok (Util.member str js)
-  with Util. Type_error _ -> Error "[Error] can't get json field"
+    Ok (find js str_path)
+  with Not_found -> Error "[Error] can't get json field"
 
 
 (* Transform a json [js] into a String *)
 let get_json_string js = 
- try
+  try
     if js = `Null then
       Error "[Error] can't read json field"
     else 
-      Ok (js |> Util.to_string)
-  with Util.Type_error _ -> 
+      Ok (js |> get_string)
+  with Parse_error _ -> 
     Error "[Error] wrong type"
 
 
 (* Get string content corresponded to [name] field *)
 let get_name json = 
-    member "name" json 
-    >>=  get_json_string
+  member json ["name"] 
+  >>=  get_json_string
 
 
 (* Concatenate two lists of type choice *)
@@ -52,28 +54,28 @@ let concat_choice_list o1 o2 =
 (* Return a string choice list *)
 let map_choice str l1 = 
   Ok (List.map (
-    fun a -> Filename.concat str a 
-  ) l1) 
+      fun a -> Filename.concat str a 
+    ) l1) 
 
 
 (* Get all regex corresponded to the [files] content *)
 let get_file_regex json =
   let rec aux acc js =
     match js with
-    | `Assoc l -> 
+    | `O l -> 
       let append_assoc_opt acc (str, js) =
         concat_choice_list (
           (aux (Ok []) js) 
           >>= map_choice str
         ) acc
       in List.fold_left append_assoc_opt acc l
-    | `List l -> List.fold_left aux acc l
+    | `A l -> List.fold_left aux acc l
     | `String str -> 
       acc >>= (fun elt -> Ok(str :: elt))
     | `Null -> Ok []
     | _ -> Error "[Error] can't find regex"
-    in
-    member "files" json 
-    >>= aux (Ok [])
+  in
+  member json ["files"]
+  >>= aux (Ok [])
 
 

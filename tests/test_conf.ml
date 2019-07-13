@@ -36,7 +36,7 @@ let test_name_existance _ =
     let res = 
       Conf.init_json ("res/" ^ a)  
       >>= Conf.get_name in
-    (check bool) ("Name existed : "^a) d (res <> (Error "[Error] can't read json field"))
+    (check bool) ("Name existed : "^a) d (res <> (Error "[Error] can't get json field"))
   in
   List.iter aux expected_res
 

@@ -29,7 +29,7 @@ depends: [
     "odoc"     {build}
     "cmdliner"
     "alcotest"
-    "yojson"
+    "ezjsonm"
     "cmdliner"
 ]
 

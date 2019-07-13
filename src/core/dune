@@ -1,5 +1,5 @@
 (library
   (name core)
   (public_name eos.core)
-  (libraries str yojson cmdliner)
+  (libraries str ezjsonm cmdliner)
 )
