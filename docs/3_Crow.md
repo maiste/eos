@@ -20,11 +20,14 @@ Moreover, a manual will be implemented to understand each command : please refer
 We add new basic commands to previous ones : 
 
 - ```eos init [template]```: initialise a *.eos/auto.json*, a *.eos/config.json*  in the current directory (if they are not already present) and use the default configuration provided by the template creator
+- ```eos change [name]```: choose the template and add it to *.eos/auto.json*
+- ```eos list```: list templates installed on the computer
 - ```eos status [-d]```: display files that needed to be updated. 
  - `-d` option displays differences between headers.
 - ```eos check```: check if the *.eos/config.json* is correct with the template name
 
 ### Files
 We put our functions in this file:
- 
+
+- ```choice.ml```: module to manage template installed on the computer
 - ```updater.ml```: module to update file content.
