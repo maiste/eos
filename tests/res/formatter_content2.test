@@ -1,0 +1,13 @@
+{
+    "template" : "Test list {{name}} : {{# list}} {{name}} {{/list}}.",
+    "name": {
+        "position" : "left",
+        "size" : 10
+    },
+    "list" : {
+        "name" : {
+            "position" : "right",
+            "size" : 10
+        }
+    }
+}

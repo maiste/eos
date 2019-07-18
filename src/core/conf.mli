@@ -5,14 +5,20 @@
 
 open Monad
 
-(* Name of the config's file *)
+(** Name of the config's file *)
 val conf_file : string
 
-(* init [json] variable *)
+(** init [json] variable *)
 val init_json : string -> Ezjsonm.value choice
 
-(* Get string content corresponded to [name] field *)
+(** Get the corresponding field of [str_path] in [json] *)
+val member : Ezjsonm.value -> string list -> Ezjsonm.value choice
+
+(** Get string content corresponding to [name] field *)
 val get_name : Ezjsonm.value -> string choice
 
-(* Get all regex corresponded to the [files] content *)
+(** Get all regex corresponding to the [files] content *)
 val get_file_regex : Ezjsonm.value -> string list choice
+
+(** Get content corresponding to [template] field *)
+val get_user_template : Ezjsonm.value -> Ezjsonm.value choice

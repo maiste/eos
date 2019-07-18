@@ -11,6 +11,20 @@ let (>>=) obj f =
   | Ok a -> f a
   | Error b -> Error b
 
+(* Apply function corresponding to [List.map f l] where [f] is a [('a -> 'b choice)] function and [l] is a ['a list]. 
+ * Return a ['b list choice].
+*)
+let map_choice_list f l =
+  let nl = 
+    List.fold_left 
+      (fun a b -> 
+         a >>= (fun acc -> (f b) >>= (fun res -> Ok (res :: acc)))
+      ) 
+      (Ok([]))
+      l
+  in
+  nl >>= (fun l -> Ok (List.rev l))
+
 (* Bind for option *)
 let (>==) obj f = 
   match obj with

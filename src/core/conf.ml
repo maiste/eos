@@ -20,7 +20,7 @@ let init_json path =
   with Sys_error _ | Parse_error _ -> Error "[Error] can't init json"
 
 
-(* Get the corresponding field of [str] in [json] *)
+(* Get the corresponding field of [str_path] in [json] *)
 let member js str_path = 
   try
     Ok (find js str_path)
@@ -38,7 +38,7 @@ let get_json_string js =
     Error "[Error] wrong type"
 
 
-(* Get string content corresponded to [name] field *)
+(* Get string content corresponding to [name] field *)
 let get_name json = 
   member json ["name"] 
   >>=  get_json_string
@@ -58,7 +58,7 @@ let map_choice str l1 =
     ) l1) 
 
 
-(* Get all regex corresponded to the [files] content *)
+(* Get all regex corresponding to the [files] content *)
 let get_file_regex json =
   let rec aux acc js =
     match js with
@@ -78,4 +78,6 @@ let get_file_regex json =
   member json ["files"]
   >>= aux (Ok [])
 
-
+(* Get content corresponding to [template] field *)
+let get_user_template json = 
+  member json ["template"] 
