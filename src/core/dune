@@ -2,4 +2,5 @@
   (name core)
   (public_name eos.core)
   (libraries str ezjsonm cmdliner)
+  (flags (:standard -w -32))
 )
