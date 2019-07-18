@@ -31,6 +31,8 @@ depends: [
     "alcotest"
     "ezjsonm"
     "cmdliner"
+    "mustache"
+    "fmt"
 ]
 
 build: ["dune" "build" "-p" name "-j" jobs]

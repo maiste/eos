@@ -4,5 +4,16 @@
         "ex.*\\.json",
         "tests/"
     ],
-    "is_working": true
+    "is_working": true,
+    "depth0" :
+    {
+        "depth1" : 
+            {
+                "depth2" : "element"
+            }
+    },
+    "template" :{
+        "name1": "name1",
+        "name2": "name2"
+    }
 }
