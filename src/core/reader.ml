@@ -22,8 +22,8 @@ let open_file filename : in_channel choice =
 let read_line_from input : line =
   try
     Line (input_line input)
-  with End_of_file -> EOF
-  | _ -> Failed "[Error] Can't read_lines"
+  with End_of_file -> close_in input ; EOF
+  | _ -> close_in input ; Failed "[Error] Can't read_lines"
 
 
 (* Read one line frome [input] and add it 
