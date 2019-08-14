@@ -13,6 +13,7 @@ let test_core = [
   "Formatter", Test_formatter.suite   ;
   "Comparator", Test_comparator.suite ;
   "Comment", Test_comment.suite       ;
+  "Writer", Test_writer.suite ;
 ]
 
 
