@@ -10,7 +10,7 @@ open Monad
 
 (* Name of the config's file *)
 let conf_file = "./.eos/config.json"
-
+let template_file = "./.eos/template.json"
 
 (* init [json] variable *)
 let init_json path =

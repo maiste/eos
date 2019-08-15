@@ -43,7 +43,7 @@ let man =
 
 let prompt_list l = List.iter (Printf.printf "%s\n") l
 
-let get_files () = 
+let get_files () =
   match
     ((Conf.init_json Conf.conf_file) 
      >>= Conf.get_file_regex 
@@ -51,12 +51,37 @@ let get_files () =
   | Ok l -> Ok (prompt_list l)
   | Error msg -> Error (`Msg msg)
 
+
+(* Show the current header *)
+let show_header () =
+  let user = Conf.init_json Conf.conf_file in
+  let template = Conf.init_json Conf.template_file in 
+  match user, template with
+  | Ok u, Ok t-> (
+    match Formatter.formatter t u with
+    | Ok s -> (
+        Ok (
+          Printf.printf "This is the current header with your conf:\n%s\n" s
+        )
+      )
+    | Error msg -> Error (`Msg msg)
+  )
+  | Error msg, _ -> Error (`Msg msg)
+  |_, Error msg -> Error (`Msg msg)
+ 
+
 (* command corresponding to 'eos files' *)
 let files = 
   let doc = "display files tracked by eos." in
   let exits = Term.default_exits in
   Term.(term_result (const get_files $ const ())),
   Term.info "files" ~doc ~exits ~man
+
+let show =
+  let doc = "display the header." in
+  let exits = Term.default_exits in
+  Term.(term_result (const show_header $ const ())),
+  Term.info "show" ~doc ~exits ~man
 
 (* default command if no-command is matched *)
 let default =
@@ -67,7 +92,8 @@ let default =
 (* list of all eos' command *)
 let cmds = 
   [
-    files
+    files ;
+    show  ;
   ]
 
 let run () = Term.(exit ~term_err:1 @@ eval_choice default cmds)
