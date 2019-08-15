@@ -5,8 +5,9 @@
 
 open Monad
 
-(** Name of the config's file *)
+(** Name of the config file *)
 val conf_file : string
+val template_file : string
 
 (** init [json] variable *)
 val init_json : string -> Ezjsonm.value choice
