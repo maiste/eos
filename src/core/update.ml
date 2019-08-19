@@ -40,28 +40,42 @@ let change_file v c content file =
           Printf.printf "Unmodified file : %s\n" file
       | Error e -> Printf.printf "Problem to modify file '%s' : %s\n" file e
 
+(* Comments [hdr] depending of [file] extension *)
+let comment_hdr hdr file cmt =
+  let ext = Filename.extension file in 
+  let ext = String.sub ext 1 (String.length ext - 1) in
+  Comment.build_header hdr ext cmt
+
 (* Looks on the content of a specific file and determines if we need to change the file *)
-let update v c oh nh file =
-  let change_content nh start content = 
-    let without_hdr = snd (cut_list start content) in
-    List.rev_append (List.rev nh) without_hdr
-  in
-  let apply content = 
-    if Comparator.compare oh nh then 
-      begin
+let update v c comment oh nh file =
+  let nh = comment_hdr nh file comment in
+  let oh = comment_hdr oh file comment in
+  match oh, nh with 
+  | Ok oh, Ok nh ->
+    begin
+      let change_content nh start content = 
+        let without_hdr = snd (cut_list start content) in
+        List.rev_append (List.rev nh) without_hdr
+      in
+      let apply content = 
+        if Comparator.compare oh nh then 
+          begin
+            if Comparator.begin_of nh content = false then 
+              (change_file v c (change_content nh 0 content) file)
+          end
+        else 
+        if Comparator.begin_of oh content then
+          (change_file v c (change_content nh (List.length oh) content) file)
+        else 
         if Comparator.begin_of nh content = false then 
           (change_file v c (change_content nh 0 content) file)
-      end
-    else 
-    if Comparator.begin_of oh content then
-      (change_file v c (change_content nh (List.length oh) content) file)
-    else 
-    if Comparator.begin_of nh content = false then 
-      (change_file v c (change_content nh 0 content) file)
-  in
-  match Reader.read_file file with
-  | Ok content -> apply content
-  | Error e -> Printf.printf "%s\n" e
+      in
+      match Reader.read_file file with
+      | Ok content -> apply content
+      | Error e -> Printf.printf "%s\n" e
+    end
+  | Error e, _ -> Printf.printf "%s\n" e
+  | _, Error e -> Printf.printf "%s\n" e
 
 (* Main function wich recovers all targeted files and updates them *)
 let update_all v c =
@@ -79,12 +93,15 @@ let update_all v c =
   let new_head = arg_head 
     >>= (fun (a,b) -> Formatter.formatter a b) 
     >>= (fun res -> Ok (String.split_on_char '\n' res)) in
-  let f oh nh l = Ok (List.iter (update v c oh nh) l) in
-  old_head 
-  >>= (fun oh -> 
-      new_head 
-      >>= (fun nh ->
-          files 
-          >>= f oh nh
-        )
-    )
+  let map_comment = user >>= Comment.user_map in
+  let f comment oh nh l = Ok (List.iter (update v c comment oh nh) l) in
+  map_comment 
+  >>= (fun cmt -> old_head 
+        >>= (fun oh -> 
+            new_head 
+            >>= (fun nh ->
+                files 
+                >>= f cmt oh nh
+              )
+          )
+      )
