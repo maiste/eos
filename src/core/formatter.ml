@@ -50,7 +50,7 @@ let format_user_var templ user =
   in
   aux templ user
 
-(* Take user json and template json, and return the header filled with user variable *)
+(* Take template json and user json, and return the header filled with user variable *)
 let formatter templ user =
   let must_templ = get_template templ in
   let user_var = Conf.get_user_template user in

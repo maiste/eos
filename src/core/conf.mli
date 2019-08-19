@@ -7,6 +7,7 @@ open Monad
 
 (** Name of the config file *)
 val conf_file : string
+val auto_conf : string
 val template_file : string
 
 (** init [json] variable *)

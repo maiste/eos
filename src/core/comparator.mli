@@ -8,3 +8,4 @@
  equal false else *)
 val compare : string list -> string list -> bool
 
+val begin_of : string list -> string list -> bool

@@ -58,17 +58,21 @@ let show_header () =
   let template = Conf.init_json Conf.template_file in 
   match user, template with
   | Ok u, Ok t-> (
-    match Formatter.formatter t u with
-    | Ok s -> (
-        Ok (
-          Printf.printf "This is the current header with your conf:\n%s\n" s
+      match Formatter.formatter t u with
+      | Ok s -> (
+          Ok (
+            Printf.printf "This is the current header with your conf:\n%s\n" s
+          )
         )
-      )
-    | Error msg -> Error (`Msg msg)
-  )
+      | Error msg -> Error (`Msg msg)
+    )
   | Error msg, _ -> Error (`Msg msg)
   |_, Error msg -> Error (`Msg msg)
- 
+
+let update_files verbose confirm =
+  match Update.update_all verbose confirm with
+  | Ok l -> Ok l
+  | Error msg -> Error (`Msg msg)
 
 (* command corresponding to 'eos files' *)
 let files = 
@@ -83,6 +87,20 @@ let show =
   Term.(term_result (const show_header $ const ())),
   Term.info "show" ~doc ~exits ~man
 
+let update =
+  let confirm = 
+    let doc = "Ask for modification on all files with [y/n] questions." in
+    Arg.(value & flag & info ["c"; "confirm"] ~doc) 
+  in
+  let verbose = 
+    let doc = "Display all changed files." in
+    Arg.(value & flag & info ["v"; "verbose"] ~doc)
+  in
+  let doc = "Put new template in files." in
+  let exits = Term.default_exits in
+  Term.(term_result (const update_files $ verbose $ confirm)), 
+  Term.info "update" ~doc ~exits ~man
+
 (* default command if no-command is matched *)
 let default =
   let exits = Term.default_exits in
@@ -94,6 +112,7 @@ let cmds =
   [
     files ;
     show  ;
+    update;
   ]
 
 let run () = Term.(exit ~term_err:1 @@ eval_choice default cmds)
