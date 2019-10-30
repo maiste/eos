@@ -82,7 +82,7 @@ let update_all v c =
   let files = (Conf.init_json Conf.conf_file) 
     >>= Conf.get_file_regex 
     >>= Finder.get_files in 
-  let old_head = Reader.read_file Conf.auto_conf in
+  let old_head = Reader.read_file Conf.old_template in
   let templ = Conf.init_json Conf.template_file in
   let user = Conf.init_json Conf.conf_file in
   let arg_head = match templ, user with
@@ -93,6 +93,7 @@ let update_all v c =
   let new_head = arg_head 
     >>= (fun (a,b) -> Formatter.formatter a b) 
     >>= (fun res -> Ok (String.split_on_char '\n' res)) in
+  let _ = new_head >>= Writer.write Conf.old_template in
   let map_comment = user >>= Comment.user_map in
   let f comment oh nh l = Ok (List.iter (update v c comment oh nh) l) in
   map_comment 
