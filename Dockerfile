@@ -1,9 +1,9 @@
 FROM fedora:latest
 
 RUN dnf upgrade -y
-RUN dnf install -y ocaml opam ocaml-dune git which findutils
+RUN dnf install -y ocaml opam ocaml-dune git which findutils diffutils
 RUN opam init --disable-sandboxing -y && eval $(opam env)
-RUN opam update -y && opam upgrade -y && eval $(opam env) 
+RUN opam update -y && opam upgrade -y && eval $(opam env)
 
 COPY . /root
 WORKDIR /root
