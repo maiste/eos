@@ -1,4 +1,0 @@
-User guide
-==========
-
-User guide!
