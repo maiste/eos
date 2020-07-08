@@ -4,7 +4,7 @@
  *)
 
 open Alcotest
-open Core
+open Eos_core
 open Utilitaries
 
 

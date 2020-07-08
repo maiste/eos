@@ -55,7 +55,7 @@ let get_files () =
 (* Show the current header *)
 let show_header () =
   let user = Conf.init_json Conf.conf_file in
-  let template = Conf.init_json Conf.template_file in 
+  let template = user >>= Conf.get_template_json in
   match user, template with
   | Ok u, Ok t-> (
       match Formatter.formatter t u with

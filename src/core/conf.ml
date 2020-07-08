@@ -10,8 +10,8 @@ open Monad
 
 (* Name of the config's file *)
 let conf_file = "./.eos/config.json"
-let old_template = "./.eos/old_template"
-let template_file = "./.eos/template.json"
+let auto_file = "./.eos/auto.json"
+let template_dir = "./.eos/template"
 
 (* init [json] variable *)
 let init_json path =
@@ -82,3 +82,31 @@ let get_file_regex json =
 (* Get content corresponding to [template] field *)
 let get_user_template json = 
   member json ["template"] 
+
+(* Update the old header field *)
+let updated_auto header js =
+    Some (`String header)
+    |> update js ["old"]
+
+(* Get the old header *)
+let get_old_header js =
+  let get_choice_str value =
+    String.split_on_char '\n' value |> choice
+  in
+  member js ["old"]
+  >>= get_json_string
+  >>= get_choice_str
+
+let get_template_path js =
+  let add_dir dir =
+    template_dir ^ dir |> choice
+  in
+  member js ["model"]
+  >>= get_json_string
+  >>= add_dir
+
+(* Get the current template file *)
+let get_template_json js =
+  get_template_path js
+  >>= init_json
+ 

@@ -36,3 +36,7 @@ let opt_to_choice str_error obj =
   match obj with
   | Some a -> Ok a
   | None -> Error str_error
+
+(* From 'a to 'a choice *)
+let choice value =
+  Ok value

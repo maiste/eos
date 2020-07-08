@@ -1,2 +1,2 @@
 let () = 
-  Core.Main.main ()
+  Eos_core.Main.main ()
