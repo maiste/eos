@@ -3,7 +3,7 @@
  * DURAND-MARAIS © 2019
  *)
 open Alcotest
-open Core
+open Eos_core
 
 (* Lists to test *)
 

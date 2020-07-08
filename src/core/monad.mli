@@ -18,3 +18,6 @@ val (>==) : 'a option -> ('a -> 'b option) -> 'b option
 
 (** Function to move from option to choice *)
 val opt_to_choice : string -> 'a option -> 'a choice
+
+(* Create a choice value *)
+val choice : 'a -> 'a choice

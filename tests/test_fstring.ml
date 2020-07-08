@@ -4,7 +4,7 @@
  *)
 
 open Alcotest
-open Core.FString
+open Eos_core.FString
 open Utilitaries
 
 (* Test center *)

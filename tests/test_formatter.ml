@@ -3,10 +3,10 @@
  * DURAND-MARAIS © 2019
  *)
 open Alcotest
-open Core
+open Eos_core
 open Utilitaries
-open Monad
 
+let (>>=) = Monad.(>>=)
 
 let mustache_1 = Ok (Mustache.of_string "{{subject}} {{verb}} that's working.\nIt is {{adj}}.")
 let user_conf_1 = Ezjsonm.from_string 

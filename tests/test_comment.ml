@@ -3,9 +3,9 @@
  * DURAND-MARAIS © 2019
  *)
 open Alcotest
-open Core
+open Eos_core
+open Eos_core.Monad
 open Utilitaries
-open Monad
 
 let good_json = Conf.init_json "res/good_comment.test"
 let wrong_json = Conf.init_json "res/bad_comment.test"
