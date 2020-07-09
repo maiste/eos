@@ -8,10 +8,9 @@ open Eos_core
 let test_bank =
   [
     [".*\\.ml"; "banana"];
-    [".*"];
+    ["res/.*"];
     [""];
     ["echec"];
-    ["\\..*"];
     ["src/"];
     ["./src"];
     [];
@@ -37,7 +36,11 @@ let finder_cmd rgxl =
   let rec aux acc l =
     match l with
     | [] -> acc
-    | h :: q -> aux (acc ^ " -e \"" ^ h ^ "\"") q 
+    | h :: q ->
+        if h <> "" then
+          aux (acc ^ " -e \"" ^ h ^ "\"") q
+        else
+          aux acc q
   in
   let cmd = aux "find -type f | grep -e \"^$\"" rgxl in
   let call_cmd = syscall cmd in

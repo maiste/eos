@@ -19,23 +19,26 @@ let check_directory path : bool =
 *)
 let is_targeted target path : bool =
   let exist (el : string) : bool =
-    let el_len = String.length el in
-    let dir = 
-      if el_len > 0 
-      then String.get el (String.length el - 1) = '/'
-      else false
-    in
-    if dir && not (check_directory path) then false
-    else begin
-      let el = 
-        if dir 
-        then String.sub el 0 (String.length el - 1) 
-        else el 
-      in 
-      let regex = Str.regexp el in
-      try Str.search_backward regex path (String.length path - 1) > -1
-      with Not_found -> false
-    end
+    if el = "" then
+      false
+    else
+      let el_len = String.length el in
+      let dir =
+        if el_len > 0
+        then String.get el (String.length el - 1) = '/'
+        else false
+      in
+      if dir && not (check_directory path) then false
+      else begin
+        let el =
+          if dir
+          then String.sub el 0 (String.length el - 1)
+          else el
+        in
+        let regex = Str.regexp el in
+        try Str.search_backward regex path (String.length path - 1) > -1
+        with Not_found -> false
+      end
   in
   List.exists exist target
 
