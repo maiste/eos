@@ -11,6 +11,9 @@ let (>>=) obj f =
   | Ok a -> f a
   | Error b -> Error b
 
+(* Clear bind *)
+let (let*) = (>>=)
+
 (* Apply function corresponding to [List.map f l] where [f] is a [('a -> 'b choice)] function and [l] is a ['a list]. 
  * Return a ['b list choice].
 *)
@@ -30,6 +33,8 @@ let (>==) obj f =
   match obj with
   | Some a -> f a 
   | None -> None
+
+let (let+) = (>==)
 
 (* From monad option to monad choice *)
 let opt_to_choice str_error obj =

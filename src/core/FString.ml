@@ -39,22 +39,19 @@ let add_space pos size content : string =
 (* Return a format String with the right size and
    position *)
 let format_string pos size content =
-  let size = 
-    match size with 
-    | None -> String.length content 
-    | Some s -> s 
+  let size =
+    match size with
+    | None -> String.length content
+    | Some s -> s
   in
-  let pos = 
-    match pos with 
-    | None -> Ok(Left) 
-    | Some str -> match_position str 
-  in 
+  let* pos =
+    match pos with
+    | None -> Ok(Left)
+    | Some str -> match_position str
+  in
   let s_content = String.length content in
-  pos >>=
-  (fun pos ->
-     if s_content >= size then 
-       Ok (String.sub content 0 size)
-     else 
-       Ok (add_space pos size content)
-  )
+  if s_content >= size then
+    Ok (String.sub content 0 size)
+  else
+    Ok (add_space pos size content)
 

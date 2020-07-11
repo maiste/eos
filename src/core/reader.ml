@@ -12,8 +12,8 @@ type line =
   | Failed of string
 
 (* Create an input channel for [filename] file *)
-let open_file filename : in_channel choice = 
-  try 
+let open_file filename : in_channel choice =
+  try
     Ok (open_in filename)
   with Sys_error _ -> Error "[Error] Can't open file"
 
@@ -38,8 +38,8 @@ let rec read_lines acc input : string list choice =
 (* Read a content inside [file] and return it as
    None if there is an error else Some string list *)
 let read_file file :string list choice  =
-   (open_file file)
-   >>= read_lines []
+  let* f_in = (open_file file) in
+  read_lines [] f_in
 
 
 

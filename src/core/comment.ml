@@ -106,10 +106,10 @@ let build_user_map m l =
     match l with
     | [] -> Ok (acc)
     | h::q ->
-        let o_list =
+        let* o_list =
           try Ok (get_dict h)
           with _ -> Error "[Error] Can't get object"
-        in o_list >>= create_com acc >>= aux q
+        in create_com acc o_list >>= aux q
     in aux l m
 
 
