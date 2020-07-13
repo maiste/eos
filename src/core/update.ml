@@ -84,16 +84,13 @@ let update_all v c =
     Conf.get_file_regex conf
     >>= Finder.get_files
   in
-  let* auto = Conf.init_json Conf.auto_file in
-  let* old_head = Conf.get_old_header auto in
-  let* template = Conf.get_template_json auto in
-  let* user = Conf.init_json Conf.conf_file in
+  let* old_head = Conf.get_old_header Conf.auto_file in
+  let* template = Conf.get_template_json conf in
   let* new_head =
-    let* header = Formatter.formatter template user in
+    let* header = Formatter.formatter template conf in
     Ok (String.split_on_char '\n' header)
   in
-  let* conf = Conf.get_template_path conf in
-  let* _ =  Writer.write conf new_head in
-  let* map_comment = Comment.user_map user in
+  let _ = Conf.update_auto new_head in
+  let* map_comment = Comment.user_map conf in
   let update_with_new comment oh nh l = Ok (List.iter (update v c comment oh nh) l) in
   update_with_new map_comment old_head new_head files

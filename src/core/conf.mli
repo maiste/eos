@@ -25,10 +25,9 @@ val get_file_regex : Ezjsonm.value -> string list choice
 (** Get content corresponding to [template] field *)
 val get_user_template : Ezjsonm.value -> Ezjsonm.value choice
 
-(* TODO *)
-val updated_auto : string -> Ezjsonm.value -> Ezjsonm.value
+val update_auto : string list -> unit
 
-val get_old_header : Ezjsonm.value -> string list choice
+val get_old_header : string -> string list choice
 
 val get_template_path : Ezjsonm.value -> string choice
 
