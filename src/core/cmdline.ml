@@ -7,7 +7,7 @@ open Cmdliner
 open Monad
 
 let name = "eos"
-let version = "0.0"
+let version = "0.1"
 let licence = "MIT"
 let description = "a simple header manager for your projects.
 It allows you to manage header in one single JSON file and automatize many features."
