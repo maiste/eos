@@ -20,7 +20,7 @@ let init_json path =
     Ok (from_channel file)
   with
   | Sys_error msg | Parse_error (_,msg) ->
-    let msg = Printf.sprintf "[Error] can't init json (%s): %s" path msg in
+    let msg = Printf.sprintf "[Error] %s" msg in
     Error msg
 
 (* Get the corresponding field of [str_path] in [json] *)
@@ -29,7 +29,7 @@ let member js str_path =
     Ok (find js str_path)
   with Not_found ->
     let path = String.concat "" str_path in
-    let msg = Printf.sprintf "[Error] %s" path in
+    let msg = Printf.sprintf "[Error] can't get field %s" path in
     Error msg
 
 
