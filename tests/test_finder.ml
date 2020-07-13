@@ -2,7 +2,6 @@
  * Module to provide a test example 
  * DURAND-MARAIS © 2019
  *)
-open Alcotest
 open Eos_core
 
 let test_bank =
@@ -27,6 +26,8 @@ let syscall cmd =
    with End_of_file -> ());
   let _ = Unix.close_process (ic, oc) in
   (Buffer.contents buf)
+
+open Alcotest (* Avoid conflict name *)
 
 (* Split of [str] by '\n' *)
 let decomp str = String.split_on_char '\n' str
