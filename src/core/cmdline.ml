@@ -15,7 +15,7 @@ let homepage = "https://github.com/maiste/eos"
 let bug_reports = "https://github.com/maiste/eos/issues"
 let dev_repo = "git://github.com/maiste/eos.git"
 let authors = [
-  "Etienne (Maiste) Marais <etienne@marais.green>";
+  "Etienne (Maiste) Marais <etienne@maiste.fr>";
   "Xavier (Xavitator) Durand <xavier75013@gmail.com>"
 ]
 
