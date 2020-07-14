@@ -14,18 +14,18 @@ bug-reports: "https://github.com/maiste/eos/issues"
 dev-repo: "git://github.com/maiste/eos.git"
 
 maintainer: [
-    "Étienne (Maiste) Marais <etienne@marais.green>"
+    "Étienne (Maiste) Marais <etienne@maiste.fr>"
     " Xavier (Xavitator) Durand <xavier75013@gmail.com>"
 ]
 
 authors: [
-     "Étienne (Maiste) Marais <etienne@marais.green>"
+     "Étienne (Maiste) Marais <etienne@maiste.fr>"
     " Xavier (Xavitator) Durand <xavier75013@gmail.com>"
 ]
 
 depends: [
     "dune"    {build}
-    "ocaml"   {build & >= "4.07.0"}
+    "ocaml"   {build & >= "4.08.0"}
     "odoc"     {build}
     "cmdliner"
     "alcotest"
