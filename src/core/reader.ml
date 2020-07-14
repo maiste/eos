@@ -38,7 +38,7 @@ let rec read_lines acc input : string list choice =
 (* Read a content inside [file] and return it as
    None if there is an error else Some string list *)
 let read_file file :string list choice  =
-  let* f_in = (open_file file) in
+  let* f_in = open_file file in
   read_lines [] f_in
 
 
