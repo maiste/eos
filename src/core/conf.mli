@@ -27,7 +27,7 @@ val get_user_template : Ezjsonm.value -> Ezjsonm.value choice
 
 val update_auto : string list -> unit
 
-val get_old_header : string -> string list choice
+val get_old_header : unit -> string list choice
 
 val get_template_path : Ezjsonm.value -> string choice
 

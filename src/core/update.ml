@@ -84,7 +84,7 @@ let update_all v c =
     Conf.get_file_regex conf
     >>= Finder.get_files
   in
-  let* old_head = Conf.get_old_header Conf.auto_file in
+  let* old_head = Conf.get_old_header () in
   let* template = Conf.get_template_json conf in
   let* new_head =
     let* header = Formatter.formatter template conf in

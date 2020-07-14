@@ -94,8 +94,8 @@ let update_auto header =
   |> ignore
 
 (* Get the old header *)
-let get_old_header value =
-  Reader.read_file value
+let get_old_header () =
+  Reader.read_file auto_file
 
 let get_template_path js =
   let add_dir dir =
