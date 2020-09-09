@@ -1,0 +1,13 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build docker image
+        run: docker build -t maiste/eos:v1 .
+      - name: Test Docker
+        run: docker run --rm --name eos maiste/eos:v1 sh -c 'eval `opam config env` ; dune runtest'
