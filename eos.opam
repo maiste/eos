@@ -24,7 +24,7 @@ authors: [
 ]
 
 depends: [
-    "dune"    {build}
+    "dune"    {build & >= "2.6.0"}
     "ocaml"   {build & >= "4.08.0"}
     "odoc"     {build}
     "cmdliner"
