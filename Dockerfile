@@ -1,17 +1,16 @@
-FROM fedora:latest
+FROM alpine:latest
 
-RUN dnf upgrade -y
-RUN dnf install -y ocaml opam ocaml-dune git which findutils diffutils
-RUN opam init --disable-sandboxing -y && eval $(opam env)
-RUN opam update -y && opam upgrade -y && eval $(opam env)
+RUN apk add opam build-base m4 git coreutils
+RUN opam init --disable-sandboxing -y
+RUN opam update -y && opam upgrade -y
+RUN opam switch create 4.08.0
+RUN eval $(opam env)
+RUN opam switch 4.08.0
+RUN eval $(opam env) && ocaml --version
 
 COPY . /root
 WORKDIR /root
 
-RUN opam switch create 4.08.0
-RUN eval eval $(opam env)
-RUN opam switch 4.08.0
-RUN eval $(opam env) && ocaml --version
 RUN opam install -y . --deps-only
 RUN eval $(opam env)
 

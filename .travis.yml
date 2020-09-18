@@ -1,4 +1,0 @@
-os: linux
-language: minimal
-
-script: sh .travis.sh
