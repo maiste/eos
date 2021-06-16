@@ -24,9 +24,10 @@ authors: [
 ]
 
 depends: [
-    "dune"    {build & >= "2.6.0"}
-    "ocaml"   {build & >= "4.08.0"}
-    "odoc"     {build}
+    "dune"       { build & >= "2.7.0" }
+    "ocaml"      { build & >= "4.08.0" }
+    "odoc"       { build }
+    "bisect_ppx" { >= "2.5.0" }
     "cmdliner"
     "alcotest"
     "ezjsonm"
