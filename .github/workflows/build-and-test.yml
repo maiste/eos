@@ -1,9 +1,11 @@
-name: CI
+name: CI and coverage
 
 on:
   push:
     branches:
       - 'v1.[0-9]+.[0-9]+'
+      - 'dev'
+      - 'master'
   pull_request:
     branches:
       - '*'
@@ -13,7 +15,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Build docker image
-        run: docker build -t maiste/eos:v1 .
-      - name: Test Docker
-        run: docker run --rm --name eos maiste/eos:v1 sh -c 'eval `opam config env` ; dune runtest'
+      - uses: actions/checkout@master
+        with:
+          submodules: recursive
+      - uses: avsm/setup-ocaml@master
+      - name: Install OPAM deps
+        run: opam install -y --deps-only .
+      - name: Test build
+        run: opam exec -- dune build .
+      - name: Run tests
+        run: opam exec -- dune runtest --instrument-with bisect_ppx --force
+      - name: Send report
+        run: opam exec -- bisect-ppx-report send-to Codecov
