@@ -2,4 +2,5 @@
   (name eos_core)
   (flags (:standard -w -32))
   (libraries str ezjsonm mustache cmdliner)
+  (instrumentation (backend bisect_ppx))
 )
