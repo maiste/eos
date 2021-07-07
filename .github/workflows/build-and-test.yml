@@ -20,7 +20,7 @@ jobs:
           submodules: recursive
       - uses: avsm/setup-ocaml@master
       - name: Install OPAM deps
-        run: opam install -y --deps-only .
+        run: opam install -y --deps-only --with-test .
       - name: Test build
         run: opam exec -- dune build .
       - name: Run tests
