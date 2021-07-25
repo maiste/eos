@@ -1,1 +1,4 @@
 site_name: Eos-hm
+theme:
+    name: readthedocs
+    highlightjs: true
