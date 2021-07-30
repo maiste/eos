@@ -8,3 +8,7 @@ Eos, an header manager
 ## Contributing
 
 Please, refer to the **CONTRIBUTING.md** file.
+
+## THE END
+
+Eos seemed to be a good idea at first, but it appears it's not really useful. As the a consequence, the project is **closed** and **archived**.
