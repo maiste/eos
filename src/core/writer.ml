@@ -23,11 +23,19 @@
 (* SOFTWARE.                                                                      *)
 (**********************************************************************************)
 
-(** Module in charge of managing the files that need to be watched by eos. *)
+(* Auxilliary function to write content. *)
+let rec writer chan lst =
+  match lst with
+  | [] ->
+      close_out chan ;
+      Ok true
+  | h :: q ->
+      output_string chan (h ^ "\n") ;
+      writer chan q
 
-open Monad
-
-(** Tail-recursive search of all files corresponded to the [target] list
-    of regex. [target] list of regex to match files. It returns list of
-    all targeted files. *)
-val get_files : string list -> string list choice
+(** Writes a file. *)
+let write file content =
+  if Sys.file_exists file then
+    let out_chan = open_out file in
+    writer out_chan content
+  else Error "[Error] Can't find file"

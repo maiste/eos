@@ -2,16 +2,14 @@
  * Module to provide a test example 
  * DURAND-MARAIS © 2019
  *)
-open Alcotest
-open Core
+open Eos_core
 
 let test_bank =
   [
     [".*\\.ml"; "banana"];
-    [".*"];
+    ["res/.*"];
     [""];
     ["echec"];
-    ["\\..*"];
     ["src/"];
     ["./src"];
     [];
@@ -29,6 +27,8 @@ let syscall cmd =
   let _ = Unix.close_process (ic, oc) in
   (Buffer.contents buf)
 
+open Alcotest (* Avoid conflict name *)
+
 (* Split of [str] by '\n' *)
 let decomp str = String.split_on_char '\n' str
 
@@ -37,7 +37,11 @@ let finder_cmd rgxl =
   let rec aux acc l =
     match l with
     | [] -> acc
-    | h :: q -> aux (acc ^ " -e \"" ^ h ^ "\"") q 
+    | h :: q ->
+        if h <> "" then
+          aux (acc ^ " -e \"" ^ h ^ "\"") q
+        else
+          aux acc q
   in
   let cmd = aux "find -type f | grep -e \"^$\"" rgxl in
   let call_cmd = syscall cmd in

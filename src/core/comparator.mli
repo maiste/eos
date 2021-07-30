@@ -23,11 +23,9 @@
 (* SOFTWARE.                                                                      *)
 (**********************************************************************************)
 
-(** Module in charge of managing the files that need to be watched by eos. *)
+(** Compares two string lists and return true if they are
+    equal false else. *)
+val compare : string list -> string list -> bool
 
-open Monad
-
-(** Tail-recursive search of all files corresponded to the [target] list
-    of regex. [target] list of regex to match files. It returns list of
-    all targeted files. *)
-val get_files : string list -> string list choice
+(** [begin_of h1 h2] returns true if h1 is included into h2. *)
+val begin_of : string list -> string list -> bool

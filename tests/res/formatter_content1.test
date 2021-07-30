@@ -1,0 +1,10 @@
+{
+    "template" : "{{subject}} {{verb}} that's working.\nIt is {{adj}}.",
+    "subject": {
+        "position" : "left",
+        "size" : 4
+    },
+    "verb" : {
+        "size" : 10
+    }
+}

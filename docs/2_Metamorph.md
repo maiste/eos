@@ -33,9 +33,7 @@ We interpret the eos template and create a header corresponding to the user info
 ### Basic cmdline
 We add new basic commands : 
 
-- ```eos change [name]```: choose the template and add it to *.eos/auto.json*
 - ```eos show```: display template chosen with eos
-- ```eos list```: list templates installed on the computer
 - ```eos update [-vc]```: put new template in files and in *.eos/*. 
   - `-v` option corresponds to the verbose mode and displays all changed files. 
   - `-c` option is the confirm mode and asks for modification on all files with `[y/n]` questions.
@@ -45,7 +43,7 @@ We put our functions in different files :
 
 - ```comparator.ml```:  module to handle comparison between two strings
 - ```cmdline.ml```: add ```cmdline``` options
-- ```choice.ml```: module to manage template installed on the computer
 - ```writer.ml```: module to write text in a file
-- ```reader.ml``` :improve file reading
+- ```reader.ml``` : improve file reading
+- ```FString.ml```: manage string position
 - ```formatter.ml```: module to transform templates and *.eos/config.json* into a String (construct of header)

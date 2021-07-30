@@ -23,64 +23,62 @@
 (* SOFTWARE.                                                                      *)
 (**********************************************************************************)
 
+open Ezjsonm
 open Monad
 
-(* This function checks if a string passed in argument is a directory. 
-    The default value is Sys.is_directory function. *)
-let check_directory path : bool =
-  try Sys.is_directory path with Sys_error _ -> false
+let value_to_t js = match js with `A l -> `A l | `O l -> `O l | _ -> wrap js
 
-(* This function returns if a file is targeted. *)
-let is_targeted target path : bool =
-  let exist (el : string) : bool =
-    if el = "" then false
-    else
-      let el_len = String.length el in
-      let dir =
-        if el_len > 0 then String.get el (String.length el - 1) = '/' else false
-      in
-      if dir && not (check_directory path) then false
-      else
-        let el = if dir then String.sub el 0 (String.length el - 1) else el in
-        let regex = Str.regexp el in
-        try Str.search_backward regex path (String.length path - 1) > -1
-        with Not_found -> false
+(* Recovers string corresponding to the mustache template. *)
+let get_template json =
+  let* conf = Conf.member json [ "template" ] in
+  let* template =
+    try Ok (get_string conf) with _ -> Error "[Error] Template Parse Error"
   in
-  List.exists exist target
+  try Ok (Mustache.of_string template)
+  with _ -> Error "[Error] Template Parser Error"
 
-(* Tail-recursive search (and add to [l]) of all files in directories and
-   sub-directories given at second argument. If the second argument is not
-   a directory, we add it in the list [l]. *)
-let rec get_sub_files l path : string list =
-  if not (check_directory path) then path :: l
-  else
-    let all_f = Sys.readdir path in
-    let aux (acc : string list) (str : string) =
-      if str = "." || str = ".." then acc
-      else
-        let file = Filename.concat path str in
-        get_sub_files acc file
-    in
-    Array.fold_left aux l all_f
+(* Gets only variable declared in the template. *)
+let get_template_var json =
+  match json with
+  | `Null | `Bool _ | `Float _ | `String _ | `A _ -> json
+  | `O l -> `O (List.filter (fun (str, _) -> str <> "template") l)
 
-(* Tail-recursive search of all files corresponded to the
-   [target] list of regex. *)
-let get_all_files target : string list =
-  let rec get_file target path acc =
-    let all_f = Sys.readdir path in
-    let aux acc str =
-      if str = "." || str = ".." then acc
-      else
-        let file = Filename.concat path str in
-        if is_targeted target file then get_sub_files acc file
-        else if check_directory file then get_file target file acc
-        else acc
+(* Formats user variable with the template configuration of variable. *)
+let format_user_var templ user =
+  let rec aux format user =
+    let len = try Some (get_int (find format [ "size" ])) with _ -> None in
+    let pos =
+      try Some (get_string (find format [ "position" ])) with _ -> None
     in
-    Array.fold_left aux acc all_f
+    let make_String a = Ok (string a) in
+    match user with
+    | `Null -> Ok user
+    | `Bool b ->
+        FString.format_string pos len (string_of_bool b) >>= make_String
+    | `Float f ->
+        FString.format_string pos len (Printf.sprintf "%.12g" f) >>= make_String
+    | `String str -> FString.format_string pos len str >>= make_String
+    | `A l ->
+        let* l = map_choice_list (aux format) l in
+        Ok (`A l)
+    | `O l ->
+        let format_object (str, v) =
+          try
+            let format = find format [ str ] in
+            let* obj = aux format v in
+            Ok (str, obj)
+          with Not_found -> Ok (str, v)
+        in
+        let* obj = map_choice_list format_object l in
+        Ok (`O obj)
   in
-  get_file target "." []
+  aux templ user
 
-let get_files target : string list choice =
-  match get_all_files target with
-  | [] -> Error "[Warning] can't find any file"
-  | lst -> Ok lst
+(* Takes template json and user json, and return the header
+   filled with user variable. *)
+let formatter template_json user =
+  let* template = get_template template_json in
+  let* user_var = Conf.get_user_template user in
+  let template_var = get_template_var template_json in
+  let* json = format_user_var template_var user_var in
+  Ok (Mustache.render template (value_to_t json))

@@ -23,11 +23,9 @@
 (* SOFTWARE.                                                                      *)
 (**********************************************************************************)
 
-(** Module in charge of managing the files that need to be watched by eos. *)
+(** The Writer module handles primitives to write into files. *)
 
 open Monad
 
-(** Tail-recursive search of all files corresponded to the [target] list
-    of regex. [target] list of regex to match files. It returns list of
-    all targeted files. *)
-val get_files : string list -> string list choice
+(** Write a string list (representation of a header into a file .*)
+val write : string -> string list -> bool choice

@@ -23,11 +23,13 @@
 (* SOFTWARE.                                                                      *)
 (**********************************************************************************)
 
-(** Module in charge of managing the files that need to be watched by eos. *)
+(** This module formats the header according to the user config. *)
 
 open Monad
 
-(** Tail-recursive search of all files corresponded to the [target] list
-    of regex. [target] list of regex to match files. It returns list of
-    all targeted files. *)
-val get_files : string list -> string list choice
+(** Recover string corresponding to the mustache template *)
+val get_template : Ezjsonm.value -> Mustache.t choice
+
+(** Take template json and user json, and return the header filled with
+    user variable. *)
+val formatter : Ezjsonm.value -> Ezjsonm.value -> string choice

@@ -23,11 +23,9 @@
 (* SOFTWARE.                                                                      *)
 (**********************************************************************************)
 
-(** Module in charge of managing the files that need to be watched by eos. *)
+(** This module provides functions to handle header updates. *)
 
 open Monad
 
-(** Tail-recursive search of all files corresponded to the [target] list
-    of regex. [target] list of regex to match files. It returns list of
-    all targeted files. *)
-val get_files : string list -> string list choice
+(** Main function wich recovers all targeted files and updates them. *)
+val update_all : bool -> bool -> unit choice

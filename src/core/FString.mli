@@ -23,11 +23,19 @@
 (* SOFTWARE.                                                                      *)
 (**********************************************************************************)
 
-(** Module in charge of managing the files that need to be watched by eos. *)
-
 open Monad
 
-(** Tail-recursive search of all files corresponded to the [target] list
-    of regex. [target] list of regex to match files. It returns list of
-    all targeted files. *)
-val get_files : string list -> string list choice
+(** Type corresponding to a position. *)
+type position =
+  | Center
+      (** Center align (add space before and after the string if needed) *)
+  | Left  (** Left align (add after the string if needed) *)
+  | Right  (** Right align (add before the string if needed) *)
+
+(** Gets string of a [position]. *)
+val position_str : position -> string
+
+(** Main function to format string where [pos] is the position of the
+    string, [size] the size of the string and [content] the content of
+    the string. *)
+val format_string : string option -> int option -> string -> string choice

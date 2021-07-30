@@ -23,11 +23,20 @@
 (* SOFTWARE.                                                                      *)
 (**********************************************************************************)
 
-(** Module in charge of managing the files that need to be watched by eos. *)
+let compare l1 l2 =
+  let rec compare_aux e1 e2 =
+    match (e1, e2) with
+    | ([], []) -> true
+    | (h1 :: q1, h2 :: q2) -> if h1 = h2 then compare_aux q1 q2 else false
+    | _ -> false
+  in
+  compare_aux l1 l2
 
-open Monad
-
-(** Tail-recursive search of all files corresponded to the [target] list
-    of regex. [target] list of regex to match files. It returns list of
-    all targeted files. *)
-val get_files : string list -> string list choice
+let begin_of l1 l2 =
+  let rec aux e1 e2 =
+    match (e1, e2) with
+    | (h1 :: q1, h2 :: q2) -> if h1 = h2 then aux q1 q2 else false
+    | ([], _) -> true
+    | _ -> false
+  in
+  aux l1 l2

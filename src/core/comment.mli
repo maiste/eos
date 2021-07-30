@@ -23,11 +23,20 @@
 (* SOFTWARE.                                                                      *)
 (**********************************************************************************)
 
-(** Module in charge of managing the files that need to be watched by eos. *)
+(** This module handles commentaries. *)
 
 open Monad
+open Ezjsonm
 
-(** Tail-recursive search of all files corresponded to the [target] list
-    of regex. [target] list of regex to match files. It returns list of
-    all targeted files. *)
-val get_files : string list -> string list choice
+(** Map to store strings. *)
+module Map_Str : Map.S
+
+(** It specifies the style of comment. *)
+type comment = Block of string * string * string | Inline of string
+
+(** Creates the user map. *)
+val user_map : value -> comment Map_Str.t choice
+
+(** Builds a header. *)
+val build_header :
+  string list -> string -> comment Map_Str.t -> string list choice

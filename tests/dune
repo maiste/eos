@@ -1,8 +1,12 @@
 (test
   (name main_test)
   (flags (:standard -w -27))
-  (libraries alcotest eos.core)
+  (libraries alcotest fmt eos_core unix)
   (deps
     (source_tree res)
   )
+  (action
+    (progn
+      (bash "chmod u+w res/writer.test")
+      (run %{test})))
 )

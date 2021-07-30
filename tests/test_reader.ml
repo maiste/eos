@@ -4,7 +4,8 @@
  *)
 
 open Alcotest
-open Core
+open Eos_core
+open Utilitaries
 
 
 (* File original content *)
@@ -17,19 +18,10 @@ let test_content = [
 ]
 
 let wrong_file _ = 
-  let file = Reader.read_file "wonderland" in
-  match file with
-  | Error a -> (check (string)) "Compare errors" "[Error] Can't open file" a
-  | _ -> raise Test_error
+  (check (choice (list string))) "Compare errors" (Error "[Error] Can't open file") (Reader.read_file "wonderland")
 
 let right_file _ = 
-  let file = Reader.read_file "res/Read_content.test" in
-  match file with
-  | Error _ ->  raise Test_error
-  | Ok  content -> 
-      (check (list string)) "Compare strings" content test_content
-
-
+  (check (choice (list string))) "Compare strings" (Ok(test_content)) (Reader.read_file "res/Read_content.test")
 
 
 (* General test suite *)
